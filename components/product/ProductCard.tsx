@@ -1,6 +1,8 @@
 import { Image } from 'expo-image';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { View, Text, Pressable } from 'react-native';
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { Product } from '@/lib/api/products';
 
 interface ProductCardProps {
@@ -9,32 +11,79 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onPress }: ProductCardProps) {
+  const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+
   const discountedPrice = product.discountPercentage
     ? (product.price * (1 - product.discountPercentage / 100)).toFixed(2)
     : product.price.toFixed(2);
 
+  const originalPrice = product.price.toFixed(2);
+  const savings = product.discountPercentage
+    ? ((product.price - parseFloat(discountedPrice)).toFixed(2))
+    : '0';
+
+  const handleCardPress = () => {
+    if (onPress) {
+      onPress();
+    } else {
+      router.push(`/products/${product.id}`);
+    }
+  };
+
   return (
-    <View className="w-1/2 p-1">
-      <View className="bg-white rounded-2xl overflow-hidden shadow-sm">
-        {/* Image */}
-        <View className="w-full h-48 bg-gray-100 relative">
+    <Pressable
+      onPress={handleCardPress}
+      onPressIn={() => setIsPressed(true)}
+      onPressOut={() => setIsPressed(false)}
+      className={`w-1/2 p-2 transition-transform ${isPressed ? 'scale-95' : 'scale-100'}`}
+    >
+      <View className="rounded-3xl overflow-hidden bg-white shadow-lg">
+        {/* Image Container */}
+        <View className="relative w-full h-56 bg-gradient-to-br from-gray-100 to-gray-200">
           <Image
             source={{ uri: product.thumbnail || product.images?.[0] }}
             style={{ width: '100%', height: '100%' }}
             contentFit="cover"
           />
-          
-          {/* Heart Icon */}
-          <Pressable className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-sm">
-            <Ionicons name="heart-outline" size={20} color="#ff6b35" />
-          </Pressable>
+
+          {/* Gradient Overlay */}
+          <View className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
           {/* Discount Badge */}
           {product.discountPercentage && (
-            <View className="absolute top-3 left-3 bg-orange-500 px-2 py-1 rounded">
+            <View className="absolute top-4 left-4 bg-red-500 rounded-full px-3 py-1 shadow-lg">
               <Text className="text-white text-xs font-bold">
                 -{product.discountPercentage.toFixed(0)}%
               </Text>
+            </View>
+          )}
+
+          {/* Favorite Button */}
+          <Pressable
+            onPress={() => setIsFavorite(!isFavorite)}
+            className="absolute top-4 right-4 bg-white rounded-full p-2.5 shadow-lg active:scale-90"
+          >
+            <Ionicons
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={20}
+              color={isFavorite ? '#ff6b35' : '#666'}
+            />
+          </Pressable>
+
+          {/* Stock Badge */}
+          {product.stock > 0 && (
+            <View className="absolute bottom-4 left-4 bg-green-500 rounded-full px-2 py-1">
+              <Text className="text-white text-xs font-bold">
+                {product.stock} in stock
+              </Text>
+            </View>
+          )}
+
+          {product.stock === 0 && (
+            <View className="absolute inset-0 bg-black/40 flex items-center justify-center">
+              <Text className="text-white font-bold text-lg">Out of Stock</Text>
             </View>
           )}
         </View>
@@ -43,47 +92,75 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
         <View className="p-4">
           {/* Brand */}
           {product.brand && (
-            <Text className="text-xs text-gray-500 mb-1">
+            <Text className="text-xs font-semibold text-orange-500 mb-1 uppercase tracking-wider">
               {product.brand}
             </Text>
           )}
 
           {/* Title */}
-          <Text className="text-sm font-semibold text-gray-800 mb-2" numberOfLines={2}>
+          <Text
+            className="text-sm font-bold text-gray-900 mb-2 leading-5"
+            numberOfLines={2}
+          >
             {product.title}
           </Text>
 
-          {/* Price */}
-          <View className="flex-row items-center gap-2 mb-3">
-            <Text className="text-lg font-bold text-gray-900">
-              ${discountedPrice}
+          {/* Rating */}
+          <View className="flex-row items-center gap-1 mb-3">
+            <View className="flex-row items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <MaterialIcons
+                  key={i}
+                  name={i < Math.floor(product.rating) ? 'star' : 'star-outline'}
+                  size={14}
+                  color="#fbbf24"
+                />
+              ))}
+            </View>
+            <Text className="text-xs text-gray-600 font-semibold">
+              {product.rating.toFixed(1)}
             </Text>
+          </View>
+
+          {/* Price Section */}
+          <View className="mb-3">
+            <View className="flex-row items-baseline gap-2">
+              <Text className="text-xl font-bold text-gray-900">
+                ${discountedPrice}
+              </Text>
+              {product.discountPercentage && (
+                <Text className="text-xs text-gray-500 line-through">
+                  ${originalPrice}
+                </Text>
+              )}
+            </View>
             {product.discountPercentage && (
-              <Text className="text-xs text-gray-400 line-through">
-                ${product.price.toFixed(2)}
+              <Text className="text-xs text-green-600 font-semibold mt-1">
+                Save ${savings}
               </Text>
             )}
           </View>
 
-          {/* Rating & Stock */}
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row items-center gap-1">
-              <Ionicons name="star" size={16} color="#ff6b35" />
-              <Text className="text-sm font-semibold text-gray-800">
-                {product.rating.toFixed(1)}
-              </Text>
-              <Text className="text-xs text-gray-500">
-                ({product.stock})
-              </Text>
-            </View>
-
-            {/* Add to Cart Button */}
-            <Pressable className={`p-2 rounded-lg ${product.stock > 0 ? 'bg-orange-500' : 'bg-gray-300'}`}>
-              <Ionicons name="bag" size={18} color="white" />
-            </Pressable>
-          </View>
+          {/* Add to Cart Button */}
+          <Pressable
+            className={`rounded-xl py-2.5 flex-row items-center justify-center gap-2 ${
+              product.stock > 0
+                ? 'bg-orange-500 active:bg-orange-600'
+                : 'bg-gray-300'
+            }`}
+            disabled={product.stock === 0}
+          >
+            <MaterialIcons
+              name="shopping-cart"
+              size={16}
+              color="white"
+            />
+            <Text className="text-white text-xs font-bold">
+              {product.stock > 0 ? 'Add Cart' : 'Unavailable'}
+            </Text>
+          </Pressable>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
