@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Modal } from 'react-native';
+import { View, TouchableOpacity, Text, Modal } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -19,16 +19,8 @@ export function NavBar({ onMenuPress }: NavBarProps) {
 
   return (
     <>
-      <View
-        style={[
-          styles.navbar,
-          {
-            backgroundColor: isDark ? '#1f2937' : '#fff',
-            borderBottomColor: isDark ? '#374151' : '#e5e7eb',
-          },
-        ]}
-      >
-        <TouchableOpacity onPress={handleMenuPress} style={styles.hamburger}>
+      <View className={`flex-row items-center justify-between px-4 py-3 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+        <TouchableOpacity onPress={handleMenuPress} className="p-2">
           <Ionicons
             name="menu"
             size={24}
@@ -36,26 +28,19 @@ export function NavBar({ onMenuPress }: NavBarProps) {
           />
         </TouchableOpacity>
 
-        <Text
-          style={[
-            styles.title,
-            {
-              color: isDark ? '#fff' : '#000',
-            },
-          ]}
-        >
+        <Text className={`flex-1 text-center text-lg font-bold ${isDark ? 'text-white' : 'text-black'}`}>
           Tizazab Ayana
         </Text>
 
-        <View style={styles.iconContainer}>
-          <TouchableOpacity style={styles.icon}>
+        <View className="flex-row gap-3">
+          <TouchableOpacity className="p-2">
             <Ionicons
               name="notifications-outline"
               size={24}
               color={isDark ? '#fff' : '#000'}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
+          <TouchableOpacity className="p-2">
             <Ionicons
               name="bag-outline"
               size={24}
@@ -72,57 +57,50 @@ export function NavBar({ onMenuPress }: NavBarProps) {
         onRequestClose={() => setMenuOpen(false)}
       >
         <TouchableOpacity
-          style={styles.overlay}
+          className="flex-1 bg-black/50"
           onPress={() => setMenuOpen(false)}
         >
-          <View
-            style={[
-              styles.menu,
-              {
-                backgroundColor: isDark ? '#1f2937' : '#fff',
-              },
-            ]}
-          >
-            <TouchableOpacity style={styles.menuItem}>
+          <View className={`w-7/12 h-full pt-16 px-4 gap-4 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
               <Ionicons
                 name="home-outline"
                 size={20}
                 color={isDark ? '#fff' : '#000'}
               />
-              <Text style={[styles.menuText, { color: isDark ? '#fff' : '#000' }]}>
+              <Text className={`text-base font-medium ${isDark ? 'text-white' : 'text-black'}`}>
                 Home
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
               <Ionicons
                 name="heart-outline"
                 size={20}
                 color={isDark ? '#fff' : '#000'}
               />
-              <Text style={[styles.menuText, { color: isDark ? '#fff' : '#000' }]}>
+              <Text className={`text-base font-medium ${isDark ? 'text-white' : 'text-black'}`}>
                 Favorites
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
               <Ionicons
                 name="settings-outline"
                 size={20}
                 color={isDark ? '#fff' : '#000'}
               />
-              <Text style={[styles.menuText, { color: isDark ? '#fff' : '#000' }]}>
+              <Text className={`text-base font-medium ${isDark ? 'text-white' : 'text-black'}`}>
                 Settings
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
               <Ionicons
                 name="log-out-outline"
                 size={20}
                 color="#ef4444"
               />
-              <Text style={[styles.menuText, { color: '#ef4444' }]}>
+              <Text className="text-base font-medium text-red-500">
                 Logout
               </Text>
             </TouchableOpacity>
@@ -132,53 +110,3 @@ export function NavBar({ onMenuPress }: NavBarProps) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  navbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-  },
-  hamburger: {
-    padding: 8,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    flex: 1,
-    textAlign: 'center',
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  icon: {
-    padding: 8,
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-start',
-  },
-  menu: {
-    width: '70%',
-    paddingTop: 60,
-    paddingHorizontal: 16,
-    gap: 16,
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    gap: 12,
-  },
-  menuText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-});
