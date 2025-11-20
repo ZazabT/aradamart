@@ -30,7 +30,7 @@ export default function HomeScreen() {
   if (loading) {
     return (
       <ThemedView style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#2563eb" />
+        <ActivityIndicator size="large" color="#ff6b35" />
         <ThemedText style={styles.loadingText}>Loading products...</ThemedText>
       </ThemedView>
     );
@@ -40,10 +40,7 @@ export default function HomeScreen() {
     return (
       <ThemedView style={styles.centerContainer}>
         <ThemedText style={styles.errorText}>Error: {error}</ThemedText>
-        <Text 
-          style={styles.retryButton}
-          onPress={() => fetchProducts()}
-        >
+        <Text style={styles.retryButton} onPress={() => fetchProducts()}>
           Retry
         </Text>
       </ThemedView>
@@ -53,10 +50,7 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <NavBar />
-      <SearchBar 
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
+      <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       <CategoryScroll 
         categories={categories}
         selectedCategory={selectedCategory}
@@ -69,7 +63,6 @@ export default function HomeScreen() {
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
         contentContainerStyle={styles.listContent}
-        scrollEnabled={true}
       />
     </ThemedView>
   );
@@ -78,7 +71,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 16,
   },
   centerContainer: {
     flex: 1,
@@ -86,10 +78,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listContent: {
-    paddingBottom: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
   },
   columnWrapper: {
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    gap: 8,
   },
   loadingText: {
     marginTop: 12,
@@ -103,10 +97,9 @@ const styles = StyleSheet.create({
   retryButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
-    backgroundColor: '#2563eb',
+    backgroundColor: '#ff6b35',
     color: '#fff',
     borderRadius: 8,
     fontWeight: '600',
-    overflow: 'hidden',
   },
 });

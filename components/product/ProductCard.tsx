@@ -14,7 +14,7 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
     : product.price.toFixed(2);
 
   return (
-    <View className="flex-1 m-2">
+    <View className="w-1/2 p-1">
       <View className="bg-white rounded-2xl overflow-hidden shadow-sm">
         {/* Image */}
         <View className="w-full h-48 bg-gray-100 relative">
