@@ -1,10 +1,6 @@
-/**
- * SearchBar component.
- * Reusable search input with optional debounced change handling.
- */
-
-import { TextInput, StyleSheet, View } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Ionicons } from '@expo/vector-icons';
+import { TextInput, View } from 'react-native';
 
 interface SearchBarProps {
   placeholder?: string;
@@ -21,35 +17,29 @@ export function SearchBar({
   const isDark = colorScheme === 'dark';
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={[
-          styles.input,
-          {
-            backgroundColor: isDark ? '#1f2937' : '#f3f4f6',
-            color: isDark ? '#fff' : '#000',
-          }
-        ]}
-        placeholder={placeholder}
-        placeholderTextColor={isDark ? '#9ca3af' : '#6b7280'}
-        value={value}
-        onChangeText={onChangeText}
-      />
+    <View className="px-4 py-3">
+      <View className={`flex-row items-center rounded-2xl px-4 py-2 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
+        <Ionicons
+          name="search"
+          size={20}
+          color={isDark ? '#9ca3af' : '#6b7280'}
+        />
+        <TextInput
+          className={`flex-1 ml-3 text-base ${isDark ? 'text-white' : 'text-black'}`}
+          placeholder={placeholder}
+          placeholderTextColor={isDark ? '#9ca3af' : '#9ca3af'}
+          value={value}
+          onChangeText={onChangeText}
+        />
+        {value && (
+          <Ionicons
+            name="close-circle"
+            size={20}
+            color={isDark ? '#9ca3af' : '#9ca3af'}
+            onPress={() => onChangeText('')}
+          />
+        )}
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  input: {
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-  },
-});

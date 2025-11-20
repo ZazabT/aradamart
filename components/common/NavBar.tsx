@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { View, TouchableOpacity, Text, Modal } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
+import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 interface NavBarProps {
   onMenuPress?: () => void;
@@ -19,7 +19,7 @@ export function NavBar({ onMenuPress }: NavBarProps) {
 
   return (
     <>
-      <View className={`flex-row items-center justify-between px-4 py-3 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+      <View className={`flex-row items-center justify-between px-4 py-3 mt-5 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
         <TouchableOpacity onPress={handleMenuPress} className="p-2">
           <Ionicons
             name="menu"

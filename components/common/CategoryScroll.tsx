@@ -1,10 +1,5 @@
-/**
- * CategoryScroll component.
- * Horizontal scrollable category list.
- */
-
-import { ScrollView, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 interface CategoryScrollProps {
   categories: string[];
@@ -21,32 +16,30 @@ export function CategoryScroll({
   const isDark = colorScheme === 'dark';
 
   return (
-    <View style={styles.container}>
+    <View className={`px-4 py-4 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+      <View className="flex-row items-center justify-between mb-4">
+        <Text className={`text-xl font-bold ${isDark ? 'text-white' : 'text-black'}`}>
+          Categories
+        </Text>
+        <TouchableOpacity onPress={() => onSelectCategory(null)}>
+          <Text className="text-sm text-gray-400 font-medium">See All</Text>
+        </TouchableOpacity>
+      </View>
+      
       <ScrollView 
         horizontal 
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={{ gap: 10 }}
       >
         <TouchableOpacity
-          style={[
-            styles.categoryButton,
-            selectedCategory === null && styles.categoryButtonActive,
-            {
-              backgroundColor: selectedCategory === null 
-                ? '#2563eb' 
-                : isDark ? '#374151' : '#e5e7eb',
-            }
-          ]}
+          className={`px-6 py-3 rounded-2xl ${
+            selectedCategory === null 
+              ? 'bg-orange-500' 
+              : isDark ? 'bg-gray-700' : 'bg-[#f6f6f6]'
+          }`}
           onPress={() => onSelectCategory(null)}
         >
-          <Text
-            style={[
-              styles.categoryText,
-              {
-                color: selectedCategory === null ? '#fff' : isDark ? '#fff' : '#000',
-              }
-            ]}
-          >
+          <Text className={`text-base font-normal ${selectedCategory === null ? 'text-white' : isDark ? 'text-gray-300' : 'text-gray-700'}`}>
             All
           </Text>
         </TouchableOpacity>
@@ -54,25 +47,14 @@ export function CategoryScroll({
         {categories.filter(Boolean).map((category) => (
           <TouchableOpacity
             key={category}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.categoryButtonActive,
-              {
-                backgroundColor: selectedCategory === category 
-                  ? '#2563eb' 
-                  : isDark ? '#374151' : '#e5e7eb',
-              }
-            ]}
+            className={`px-6 py-3 rounded-2xl ${
+              selectedCategory === category 
+                ? 'bg-orange-500' 
+                : isDark ? 'bg-gray-700' : 'bg-[#f6f6f6]'
+            }`}
             onPress={() => onSelectCategory(category)}
           >
-            <Text
-              style={[
-                styles.categoryText,
-                {
-                  color: selectedCategory === category ? '#fff' : isDark ? '#fff' : '#000',
-                }
-              ]}
-            >
+            <Text className={`text-base font-normal ${selectedCategory === category ? 'text-white' : isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </Text>
           </TouchableOpacity>
@@ -81,27 +63,3 @@ export function CategoryScroll({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 12,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    gap: 8,
-  },
-  categoryButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  categoryButtonActive: {
-    backgroundColor: '#2563eb',
-  },
-  categoryText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-});
