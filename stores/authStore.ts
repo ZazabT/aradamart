@@ -19,8 +19,8 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   users: [
-    { id: 1, name: 'Admin', email: 'admin@aradamart.com', password: 'admin123', role: 'admin' },
-    { id: 2, name: 'User', email: 'user@aradamart.com', password: 'user123', role: 'user' },
+    { id: 1, name: 'Chala Abebe', email: 'admin@aradamart.com', password: 'admin123', role: 'admin' },
+    { id: 2, name: 'Tizazab Ayana', email: 'user@aradamart.com', password: 'user123', role: 'user' },
   ],
   currentUser: null,
   error: null,
