@@ -2,6 +2,8 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useAuthStore } from '@/stores/authStore';
 
 interface NavBarProps {
   onMenuPress?: () => void;
@@ -11,10 +13,18 @@ export function NavBar({ onMenuPress }: NavBarProps) {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+  const logout = useAuthStore((state) => state.logout);
 
   const handleMenuPress = () => {
     setMenuOpen(!menuOpen);
     onMenuPress?.();
+  };
+
+  const handleLogout = () => {
+    logout();
+    setMenuOpen(false);
+    router.replace('/users/login');
   };
 
   return (
@@ -94,7 +104,7 @@ export function NavBar({ onMenuPress }: NavBarProps) {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
+            <TouchableOpacity onPress={handleLogout} className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
               <Ionicons
                 name="log-out-outline"
                 size={20}
