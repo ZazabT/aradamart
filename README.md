@@ -331,16 +331,14 @@ Strict mode enabled in `tsconfig.json` for type safety.
 ---
 
 ## 📸 Screenshots
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.07_1a08319d.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_03899dc5.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_a8857c96.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.08_d37df3b3.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.08_22b91fd6.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.11_0c625aca.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.10_02e358b6.jpg?raw=true)
--![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.11_2bb50658.jpg?raw=true)
-
----
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.07_1a08319d.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_03899dc5.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_a8857c96.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.08_d37df3b3.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.08_22b91fd6.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.11_0c625aca.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.10_02e358b6.jpg?raw=true)
+![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.11_2bb50658.jpg?raw=true)
 
 ## 🐛 Troubleshooting
 
