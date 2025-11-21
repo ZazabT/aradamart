@@ -334,13 +334,21 @@ Strict mode enabled in `tsconfig.json` for type safety.
 
 *Add screenshots here:*
 - Login screen
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.07_1a08319d.jpg?raw=true
+- Register screen
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_03899dc5.jpg?raw=true
 - Home/Products screen
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_a8857c96.jpg?raw=true
 - Product detail page
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.08_d37df3b3.jpg?raw=true
 - Favorites screen
-- Admin dashboard
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.08_22b91fd6.jpg?raw=true
 - Product management
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.11_0c625aca.jpg?raw=true
 - User management
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.10_02e358b6.jpg?raw=true
 - Activity log
+- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.11_2bb50658.jpg?raw=true
 
 ---
 
