@@ -1,8 +1,8 @@
 import { useAuthStore } from '@/stores/authStore';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import AdminActivityTab from './activity/tab';
 import AdminProductsTab from './products/tab';
 import AdminUsersTab from './users/tab';
@@ -53,17 +53,14 @@ export default function AdminScreen() {
       </View>
 
       {/* Bottom Navigation */}
-      <View className="bg-white border-t border-gray-200 flex-row">
+      <View className="bg-white border-t border-gray-200 flex-row mb-5">
         <TouchableOpacity
           onPress={() => setActiveTab('products')}
           className={`flex-1 py-3 items-center ${
             activeTab === 'products' ? 'border-t-2 border-orange-600' : 'border-t-2 border-transparent'
           }`}
         >
-          <Text className={`text-lg ${activeTab === 'products' ? 'text-orange-600' : 'text-gray-400'}`}>
-            📦
-          </Text>
-          <Text className={`font-medium text-xs mt-1 ${activeTab === 'products' ? 'text-gray-900' : 'text-gray-500'}`}>
+          <Text className={`font-medium text-md mt-1 ${activeTab === 'products' ? 'text-gray-900' : 'text-gray-500'}`}>
             Products
           </Text>
         </TouchableOpacity>
@@ -73,10 +70,7 @@ export default function AdminScreen() {
             activeTab === 'users' ? 'border-t-2 border-orange-600' : 'border-t-2 border-transparent'
           }`}
         >
-          <Text className={`text-lg ${activeTab === 'users' ? 'text-orange-600' : 'text-gray-400'}`}>
-            👥
-          </Text>
-          <Text className={`font-medium text-xs mt-1 ${activeTab === 'users' ? 'text-gray-900' : 'text-gray-500'}`}>
+          <Text className={`font-medium text-md mt-1 ${activeTab === 'users' ? 'text-gray-900' : 'text-gray-500'}`}>
             Users
           </Text>
         </TouchableOpacity>
@@ -86,10 +80,7 @@ export default function AdminScreen() {
             activeTab === 'activity' ? 'border-t-2 border-orange-600' : 'border-t-2 border-transparent'
           }`}
         >
-          <Text className={`text-lg ${activeTab === 'activity' ? 'text-orange-600' : 'text-gray-400'}`}>
-            📊
-          </Text>
-          <Text className={`font-medium text-xs mt-1 ${activeTab === 'activity' ? 'text-gray-900' : 'text-gray-500'}`}>
+          <Text className={`font-medium text-md mt-1 ${activeTab === 'activity' ? 'text-gray-900' : 'text-gray-500'}`}>
             Activity
           </Text>
         </TouchableOpacity>
