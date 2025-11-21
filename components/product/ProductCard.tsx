@@ -1,10 +1,10 @@
-import { Image } from 'expo-image';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { View, Text, Pressable } from 'react-native';
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { Product } from '@/lib/api/products';
 import { useFavoritesStore } from '@/stores/favoritesStore';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, Text, View } from 'react-native';
 
 interface ProductCardProps {
   product: Product;
@@ -41,7 +41,7 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
       onPressOut={() => setIsPressed(false)}
       className={`w-1/2 p-2 transition-transform ${isPressed ? 'scale-95' : 'scale-100'}`}
     >
-      <View className="rounded-3xl overflow-hidden bg-white shadow-lg">
+      <View className="rounded-3xl overflow-hidden bg-white shadow-lg h-[390px]">
         {/* Image Container */}
         <View className="relative w-full h-56 bg-gradient-to-br from-gray-100 to-gray-200">
           <Image
@@ -91,7 +91,7 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
         </View>
 
         {/* Content */}
-        <View className="p-4">
+        <View className="p-4 flex-1 justify-between">
           {/* Brand */}
           {product.brand && (
             <Text className="text-xs font-semibold text-orange-500 mb-1 uppercase tracking-wider">
@@ -101,7 +101,7 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
 
           {/* Title */}
           <Text
-            className="text-sm font-bold text-gray-900 mb-2 leading-5"
+            className="text-sm font-bold text-gray-900 mb-2 leading-5 line-clamp-1"
             numberOfLines={2}
           >
             {product.title}
