@@ -4,6 +4,8 @@ import { View, Text, Pressable } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { Product } from '@/lib/api/products';
+import { useInventoryStore } from '@/stores/inventoryStore';
+import { useTransactionStore } from '@/stores/transactionStore';
 
 interface ProductCardProps {
   product: Product;
@@ -14,6 +16,9 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const { adjustStock, deleteProduct } = useInventoryStore();
+  const { addActivity } = useTransactionStore();
+  const [localStock, setLocalStock] = useState(product.stock);
 
   const discountedPrice = product.discountPercentage
     ? (product.price * (1 - product.discountPercentage / 100)).toFixed(2)
@@ -141,24 +146,50 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
             )}
           </View>
 
-          {/* Add to Cart Button */}
-          <Pressable
-            className={`rounded-xl py-2.5 flex-row items-center justify-center gap-2 ${
-              product.stock > 0
-                ? 'bg-orange-500 active:bg-orange-600'
-                : 'bg-gray-300'
-            }`}
-            disabled={product.stock === 0}
-          >
-            <MaterialIcons
-              name="shopping-cart"
-              size={16}
-              color="white"
-            />
-            <Text className="text-white text-xs font-bold">
-              {product.stock > 0 ? 'Add Cart' : 'Unavailable'}
-            </Text>
-          </Pressable>
+          {/* Stock Changer */}
+          {localStock > 0 ? (
+            <View className="flex-row items-center gap-2 bg-orange-50 rounded-xl p-2">
+              <Pressable
+                onPress={() => {
+                  const newStock = localStock - 1;
+                  setLocalStock(newStock);
+                  adjustStock(product.id.toString(), -1);
+                  addActivity('Stock Decreased', 'stock', `${product.title}: ${localStock} → ${newStock}`);
+                  if (newStock === 0) {
+                    deleteProduct(product.id.toString());
+                    addActivity('Product Removed', 'product', `${product.title} removed (stock = 0)`);
+                  }
+                }}
+                className="bg-red-500 rounded-lg p-2 active:bg-red-600"
+              >
+                <MaterialIcons name="remove" size={18} color="white" />
+              </Pressable>
+              <Text className="flex-1 text-center font-bold text-gray-800">{localStock}</Text>
+              <Pressable
+                onPress={() => {
+                  const newStock = localStock + 1;
+                  setLocalStock(newStock);
+                  adjustStock(product.id.toString(), 1);
+                  addActivity('Stock Increased', 'stock', `${product.title}: ${localStock} → ${newStock}`);
+                }}
+                className="bg-green-500 rounded-lg p-2 active:bg-green-600"
+              >
+                <MaterialIcons name="add" size={18} color="white" />
+              </Pressable>
+            </View>
+          ) : (
+            <Pressable
+              className="rounded-xl py-2.5 flex-row items-center justify-center gap-2 bg-gray-300"
+              disabled={true}
+            >
+              <MaterialIcons
+                name="shopping-cart"
+                size={16}
+                color="white"
+              />
+              <Text className="text-white text-xs font-bold">Unavailable</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </Pressable>

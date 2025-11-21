@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useAdminUserStore } from '@/stores/adminUserStore';
+import { useTransactionStore } from '@/stores/transactionStore';
 
 interface AdminUserFormProps {
   editingId?: string | null;
@@ -9,6 +10,7 @@ interface AdminUserFormProps {
 
 export default function AdminUserForm({ editingId, onClose }: AdminUserFormProps) {
   const { users, addUser, updateUser } = useAdminUserStore();
+  const { addActivity } = useTransactionStore();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [role, setRole] = useState<'admin' | 'user'>('user');
@@ -48,20 +50,21 @@ export default function AdminUserForm({ editingId, onClose }: AdminUserFormProps
     try {
       if (editingId) {
         updateUser(editingId, email, name, role);
+        addActivity('User Updated', 'user', `${name} (${email}) - ${role.toUpperCase()}`);
         Alert.alert('Success', 'User updated successfully');
       } else {
         addUser(email, name, role);
+        addActivity('User Created', 'user', `${name} (${email}) - ${role.toUpperCase()}`);
         Alert.alert('Success', 'User created successfully');
       }
       onClose();
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to save user');
     }
   };
 
   return (
     <ScrollView className="flex-1 bg-gray-50">
-      {/* Header */}
       <View className="bg-white px-5 py-4 border-b border-gray-200 flex-row justify-between items-center">
         <Text className="text-xl font-bold">{editingId ? 'Edit User' : 'Create User'}</Text>
         <TouchableOpacity onPress={onClose}>

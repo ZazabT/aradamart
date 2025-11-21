@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { useInventoryStore, InventoryProduct } from '@/stores/inventoryStore';
+import { useInventoryStore } from '@/stores/inventoryStore';
+import { useTransactionStore } from '@/stores/transactionStore';
 
 interface AdminProductFormProps {
   editingId?: string | null;
@@ -9,6 +10,7 @@ interface AdminProductFormProps {
 
 export default function AdminProductForm({ editingId, onClose }: AdminProductFormProps) {
   const { products, addProduct, updateProduct } = useInventoryStore();
+  const { addActivity } = useTransactionStore();
   const [sku, setSku] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -50,13 +52,15 @@ export default function AdminProductForm({ editingId, onClose }: AdminProductFor
     try {
       if (editingId) {
         updateProduct(editingId, sku, name, parseFloat(price), parseInt(quantity));
+        addActivity('Product Updated', 'product', `${name} (SKU: ${sku}) - $${price}`);
         Alert.alert('Success', 'Product updated successfully');
       } else {
         addProduct(sku, name, parseFloat(price), parseInt(quantity));
+        addActivity('Product Created', 'product', `${name} (SKU: ${sku}) - $${price}`);
         Alert.alert('Success', 'Product created successfully');
       }
       onClose();
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to save product');
     }
   };
