@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { FlatList, StyleSheet, ActivityIndicator, Text } from 'react-native';
-import { useProductStore } from '@/stores/productStore';
-import { ProductCard } from '@/components/product/ProductCard';
-import { ThemedView } from '@/components/themed-view';
-import { ThemedText } from '@/components/themed-text';
-import { SearchBar } from '@/components/common/SearchBar';
 import { CategoryScroll } from '@/components/common/CategoryScroll';
 import { NavBar } from '@/components/common/NavBar';
+import { SearchBar } from '@/components/common/SearchBar';
+import { ProductCard } from '@/components/product/ProductCard';
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { useProductStore } from '@/stores/productStore';
+import { useEffect } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
 
 export default function HomeScreen() {
   const { 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useInventoryStore } from '@/stores/inventoryStore';
 import { useTransactionStore } from '@/stores/transactionStore';
 import AdminProductForm from '@/components/admin/AdminProductForm';
@@ -54,74 +55,68 @@ export default function AdminProductsTab() {
   }
 
   return (
-    <View className="flex-1 bg-gray-50">
-      {/* Create Button */}
-      <View className="bg-white px-5 py-4 border-b border-gray-200">
+    <View className="flex-1 bg-white">
+      {/* Header */}
+      <View className="px-5 py-4 border-b border-gray-200">
+        <View className="flex-row justify-between items-center mb-4">
+          <Text className="text-2xl font-bold text-gray-900">Products</Text>
+          <Text className="text-sm text-gray-500">{products.length} items</Text>
+        </View>
         <TouchableOpacity
           onPress={() => setShowForm(true)}
-          className="bg-orange-500 rounded-lg py-3 items-center shadow-md"
+          className="bg-orange-600 rounded-md py-3 items-center active:bg-orange-700"
         >
-          <Text className="text-white font-bold text-lg">+ Create Product</Text>
+          <Text className="text-white font-semibold text-base">+ New Product</Text>
         </TouchableOpacity>
       </View>
 
       {/* Products List */}
       {products.length === 0 ? (
         <View className="flex-1 items-center justify-center">
-          <Text className="text-gray-500 text-lg">No products yet</Text>
+          <Text className="text-gray-400 text-base">No products yet</Text>
         </View>
       ) : (
         <FlatList
           data={products}
           keyExtractor={item => item.id}
-          contentContainerStyle={{ padding: 12 }}
+          contentContainerStyle={{ padding: 16 }}
           renderItem={({ item }) => (
-            <View className="bg-white rounded-lg p-4 mb-3 border border-gray-200 shadow-sm">
+            <View className="bg-white rounded-lg p-4 mb-3 border border-gray-200">
               {/* Product Header */}
-              <View className="flex-row justify-between items-start mb-3">
-                <View className="flex-1">
-                  <Text className="text-lg font-bold text-gray-800">{item.name}</Text>
-                  <Text className="text-sm text-gray-600">SKU: {item.sku}</Text>
+              <View className="flex-row justify-between items-start mb-4">
+                <View className="flex-1 pr-3">
+                  <Text className="text-base font-semibold text-gray-900">{item.name}</Text>
+                  <Text className="text-xs text-gray-500 mt-1">SKU: {item.sku}</Text>
                 </View>
-                <View className="bg-orange-100 rounded-lg px-3 py-1 border border-orange-200">
-                  <Text className="text-orange-700 font-bold">${item.price.toFixed(2)}</Text>
-                </View>
+                <Text className="text-lg font-semibold text-orange-600">${item.price.toFixed(2)}</Text>
               </View>
 
-              {/* Stock Info with Adjustment Buttons */}
-              <View className="mb-3">
-                <View className="flex-row items-center justify-between mb-2">
-                  <Text className="text-sm font-semibold text-gray-700">Stock Management</Text>
-                  <Text className="text-xs text-gray-500">
-                    Updated: {new Date(item.lastUpdated).toLocaleDateString()}
-                  </Text>
-                </View>
-                <View className="flex-row items-center gap-2">
-                  <View className={`flex-1 rounded-lg p-3 ${item.quantity > 0 ? 'bg-green-100' : 'bg-red-100'}`}>
-                    <Text className={`text-center font-bold text-lg ${item.quantity > 0 ? 'text-green-700' : 'text-red-700'}`}>
+              {/* Stock Section */}
+              <View className="bg-gray-50 rounded-md p-3 mb-4">
+                <View className="flex-row items-center justify-between">
+                  <View>
+                    <Text className="text-xs text-gray-600 font-medium">Stock Level</Text>
+                    <Text className={`text-sm font-semibold mt-1 ${item.quantity > 0 ? 'text-gray-900' : 'text-gray-400'}`}>
                       {item.quantity} units
                     </Text>
                   </View>
-                  {/* Stock Adjustment Buttons */}
-                  <TouchableOpacity
-                    onPress={() => handleAdjustStock(item.id, item.name, -1)}
-                    className="bg-red-500 rounded-lg px-3 py-3 items-center justify-center shadow-sm active:bg-red-600"
-                  >
-                    <Text className="text-white font-bold text-lg">−</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => handleAdjustStock(item.id, item.name, 1)}
-                    className="bg-green-500 rounded-lg px-3 py-3 items-center justify-center shadow-sm active:bg-green-600"
-                  >
-                    <Text className="text-white font-bold text-lg">+</Text>
-                  </TouchableOpacity>
+                  <View className="flex-row gap-2">
+                    <TouchableOpacity
+                      onPress={() => handleAdjustStock(item.id, item.name, -1)}
+                      className="bg-white border border-gray-300 rounded-md px-3 py-2 active:bg-gray-100"
+                    >
+                      <Text className="text-gray-700 font-semibold">−</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => handleAdjustStock(item.id, item.name, 1)}
+                      className="bg-orange-50 border border-orange-200 rounded-md px-3 py-2 active:bg-orange-100"
+                    >
+                      <Text className="text-orange-600 font-semibold">+</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-
-              {/* Additional Info */}
-              <View className="bg-gray-50 rounded-lg p-2 mb-3">
-                <Text className="text-xs text-gray-600">
-                  Total Value: <Text className="font-bold text-gray-800">${(item.price * item.quantity).toFixed(2)}</Text>
+                <Text className="text-xs text-gray-500 mt-2">
+                  Total Value: ${(item.price * item.quantity).toFixed(2)}
                 </Text>
               </View>
 
@@ -129,15 +124,15 @@ export default function AdminProductsTab() {
               <View className="flex-row gap-2">
                 <TouchableOpacity
                   onPress={() => handleEdit(item.id)}
-                  className="flex-1 bg-blue-500 rounded-lg py-2 items-center shadow-sm"
+                  className="flex-1 bg-white border border-orange-200 rounded-md py-2 items-center active:bg-orange-50"
                 >
-                  <Text className="text-white font-semibold">✏️ Edit</Text>
+                  <Ionicons name="pencil" size={18} color="#ea580c" />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleDelete(item.id, item.name, item.sku)}
-                  className="flex-1 bg-red-500 rounded-lg py-2 items-center shadow-sm"
+                  className="flex-1 bg-white border border-gray-300 rounded-md py-2 items-center active:bg-gray-50"
                 >
-                  <Text className="text-white font-semibold">🗑️ Delete</Text>
+                  <Ionicons name="trash" size={18} color="#6b7280" />
                 </TouchableOpacity>
               </View>
             </View>
