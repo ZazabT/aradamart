@@ -334,7 +334,7 @@ Strict mode enabled in `tsconfig.json` for type safety.
 
 *Add screenshots here:*
 - Login screen
-- https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.07_1a08319d.jpg?raw=true
+-![image alt](https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.07_1a08319d.jpg?raw=true)
 - Register screen
 - https://github.com/ZazabT/aradamart/blob/main/screenshots/WhatsApp%20Image%202025-11-21%20at%2020.11.09_03899dc5.jpg?raw=true
 - Home/Products screen
