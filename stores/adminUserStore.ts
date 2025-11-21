@@ -10,14 +10,15 @@ export interface AdminUser {
   id: string;
   email: string;
   name: string;
+  password: string;
   role: 'admin' | 'user';
   createdAt: string;
 }
 
 interface AdminUserStore {
   users: AdminUser[];
-  addUser: (email: string, name: string, role: 'admin' | 'user') => void;
-  updateUser: (id: string, email: string, name: string, role: 'admin' | 'user') => void;
+  addUser: (email: string, name: string, password: string, role: 'admin' | 'user') => void;
+  updateUser: (id: string, email: string, name: string, password: string, role: 'admin' | 'user') => void;
   deleteUser: (id: string) => void;
   getUserByEmail: (email: string) => AdminUser | undefined;
 }
@@ -28,6 +29,7 @@ export const useAdminUserStore = create<AdminUserStore>((set, get) => ({
       id: '1',
       email: 'admin@aradamart.com',
       name: 'Chala Abebe',
+      password: 'admin123',
       role: 'admin',
       createdAt: new Date().toISOString(),
     },
@@ -35,27 +37,29 @@ export const useAdminUserStore = create<AdminUserStore>((set, get) => ({
       id: '2',
       email: 'user@aradamart.com',
       name: 'Tizazab Ayana',
+      password: 'user123',
       role: 'user',
       createdAt: new Date().toISOString(),
     },
   ],
 
-  addUser: (email, name, role) => {
+  addUser: (email, name, password, role) => {
     const newUser: AdminUser = {
       id: Date.now().toString(),
       email,
       name,
+      password,
       role,
       createdAt: new Date().toISOString(),
     };
     set(state => ({ users: [...state.users, newUser] }));
   },
 
-  updateUser: (id, email, name, role) => {
+  updateUser: (id, email, name, password, role) => {
     set(state => ({
       users: state.users.map(u =>
         u.id === id
-          ? { ...u, email, name, role }
+          ? { ...u, email, name, password, role }
           : u
       ),
     }));
