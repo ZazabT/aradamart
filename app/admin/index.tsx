@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/stores/authStore';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
@@ -27,19 +28,19 @@ export default function AdminScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-white">
       {/* Header */}
-      <View className="bg-orange-500 px-5 py-5 border-b-2 border-orange-600">
+      <View className="bg-white px-5 py-4 border-b border-gray-200">
         <View className="flex-row justify-between items-center">
           <View>
-            <Text className="text-3xl font-bold text-white">Admin Dashboard</Text>
-            <Text className="text-orange-100 text-sm mt-1">Welcome, {currentUser.name}</Text>
+            <Text className="text-2xl font-bold text-gray-900">Dashboard</Text>
+            <Text className="text-gray-500 text-xs mt-1">{currentUser.name}</Text>
           </View>
           <TouchableOpacity
             onPress={handleLogout}
-            className="bg-red-600 rounded-lg px-4 py-2 shadow-lg"
+            className="border border-orange-600 rounded-md p-2.5 active:bg-orange-50"
           >
-            <Text className="text-white font-bold text-sm">Logout</Text>
+            <Ionicons name="log-out" size={20} color="#ea580c" />
           </TouchableOpacity>
         </View>
       </View>
@@ -52,39 +53,36 @@ export default function AdminScreen() {
       </View>
 
       {/* Bottom Navigation */}
-      <View className="bg-white border-t-2 border-gray-200 flex-row shadow-lg">
+      <View className="bg-white border-t border-gray-200 flex-row mb-5">
         <TouchableOpacity
           onPress={() => setActiveTab('products')}
-          className={`flex-1 py-4 items-center ${
-            activeTab === 'products' ? 'bg-orange-50' : 'bg-white'
+          className={`flex-1 py-3 items-center ${
+            activeTab === 'products' ? 'border-t-2 border-orange-600' : 'border-t-2 border-transparent'
           }`}
         >
-          <Text className={`font-bold text-xs ${activeTab === 'products' ? 'text-orange-600' : 'text-gray-600'}`}>
+          <Text className={`font-medium text-md mt-1 ${activeTab === 'products' ? 'text-gray-900' : 'text-gray-500'}`}>
             Products
           </Text>
-          {activeTab === 'products' && <View className="w-8 h-1 bg-orange-500 rounded-full mt-1" />}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setActiveTab('users')}
-          className={`flex-1 py-4 items-center ${
-            activeTab === 'users' ? 'bg-blue-50' : 'bg-white'
+          className={`flex-1 py-3 items-center ${
+            activeTab === 'users' ? 'border-t-2 border-orange-600' : 'border-t-2 border-transparent'
           }`}
         >
-          <Text className={`font-bold text-xs ${activeTab === 'users' ? 'text-blue-600' : 'text-gray-600'}`}>
+          <Text className={`font-medium text-md mt-1 ${activeTab === 'users' ? 'text-gray-900' : 'text-gray-500'}`}>
             Users
           </Text>
-          {activeTab === 'users' && <View className="w-8 h-1 bg-blue-500 rounded-full mt-1" />}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setActiveTab('activity')}
-          className={`flex-1 py-4 items-center ${
-            activeTab === 'activity' ? 'bg-purple-50' : 'bg-white'
+          className={`flex-1 py-3 items-center ${
+            activeTab === 'activity' ? 'border-t-2 border-orange-600' : 'border-t-2 border-transparent'
           }`}
         >
-          <Text className={`font-bold text-xs ${activeTab === 'activity' ? 'text-purple-600' : 'text-gray-600'}`}>
+          <Text className={`font-medium text-md mt-1 ${activeTab === 'activity' ? 'text-gray-900' : 'text-gray-500'}`}>
             Activity
           </Text>
-          {activeTab === 'activity' && <View className="w-8 h-1 bg-purple-500 rounded-full mt-1" />}
         </TouchableOpacity>
       </View>
     </SafeAreaView>

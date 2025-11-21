@@ -2,7 +2,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -26,39 +26,48 @@ export default function LoginScreen() {
   return (
     <View className="flex-1 bg-white px-6">
       {/* Top Logo Section */}
-      <View className="mt-24 mb-12 items-center justify-center">
-        <View className="w-20 h-20 bg-orange-500 rounded-full shadow-lg items-center justify-center">
-          <Ionicons name="storefront" size={40} color="white" />
-        </View>
+      <View className="mt-12 mb-12 items-center justify-center">
+        <Image
+          source={require('@/assets/images/arada.png')}
+          style={{ width: 200, height: 200 }}
+          className="rounded-3xl"
+          resizeMode="contain"
+        />
 
-        <Text className="text-4xl font-bold text-gray-900 mt-6">Welcome Back</Text>
-        <Text className="text-gray-500 text-base mt-1">Sign in to AradaMart</Text>
+        <Text className="text-4xl font-bold text-gray-900 mt-8">Welcome Back</Text>
+        <Text className="text-gray-500 text-base mt-2">Sign in to AradaMart</Text>
       </View>
 
       {/* Email Input */}
       <View className="mb-6">
-        <Text className="text-gray-700 font-semibold mb-2 text-sm">Email Address</Text>
+        <View className="flex-row items-center mb-2">
+          <Ionicons name="mail" size={16} color="#6b7280" />
+          <Text className="text-gray-700 font-semibold ml-2 text-sm">Email Address *</Text>
+        </View>
         <TextInput
           placeholder="admin@aradamart.com"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCapitalize="none"
-          placeholderTextColor="#9ca3af"
-          className="border border-gray-300 rounded-xl px-4 py-3 text-base bg-gray-50 shadow-sm"
+          placeholderTextColor="#d1d5db"
+          className="border border-gray-300 rounded-lg px-4 py-3"
         />
       </View>
 
       {/* Password Input */}
-      <View className="mb-2">
-        <Text className="text-gray-700 font-semibold mb-2 text-sm">Password</Text>
-        <View className="flex-row items-center border border-gray-300 rounded-xl bg-gray-50 px-4 shadow-sm">
+      <View className="mb-6">
+        <View className="flex-row items-center mb-2">
+          <Ionicons name="lock-closed" size={16} color="#6b7280" />
+          <Text className="text-gray-700 font-semibold ml-2 text-sm">Password *</Text>
+        </View>
+        <View className="flex-row items-center border border-gray-300 rounded-lg px-4">
           <TextInput
             placeholder="Enter your password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor="#d1d5db"
             className="flex-1 py-3 text-base"
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)} className="p-2">
@@ -73,7 +82,7 @@ export default function LoginScreen() {
 
       {/* Error Box */}
       {error && (
-        <View className="bg-red-50 border border-red-300 rounded-xl p-3.5 my-5">
+        <View className="bg-red-50 border border-red-300 rounded-lg p-3.5 my-5">
           <View className="flex-row items-center gap-2">
             <Ionicons name="alert-circle" size={18} color="#dc2626" />
             <Text className="text-red-700 text-sm font-medium flex-1">{error}</Text>
@@ -84,13 +93,14 @@ export default function LoginScreen() {
       {/* Login Button */}
       <TouchableOpacity
         onPress={handleLogin}
-        className="bg-orange-500 rounded-xl py-4 items-center mt-6 shadow-md active:bg-orange-600"
+        className="bg-orange-500 rounded-lg py-4 items-center mt-8 active:bg-orange-600 flex-row justify-center gap-2"
       >
+        <Ionicons name="log-in" size={20} color="white" />
         <Text className="text-white font-bold text-base">Sign In</Text>
       </TouchableOpacity>
 
       {/* Register Link */}
-      <TouchableOpacity onPress={() => router.push('/users/register')} className="py-4">
+      <TouchableOpacity onPress={() => router.push('/users/register')} className="py-5">
         <Text className="text-center text-gray-600 text-base">
           Don&apos;t have an account?{' '}
           <Text className="text-orange-500 font-bold">Create one</Text>
@@ -98,7 +108,7 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
       {/* Demo Accounts Box */}
-      <View className="mt-10 p-5 bg-orange-50 border border-orange-200 rounded-xl shadow-sm">
+      <View className="mt-10 p-5 bg-orange-50 border border-orange-200 rounded-lg">
         <View className="flex-row items-center gap-2 mb-3">
           <Ionicons name="information-circle" size={20} color="#ea580c" />
           <Text className="text-orange-900 font-bold text-sm">Demo Accounts</Text>
