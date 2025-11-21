@@ -20,7 +20,7 @@ export default function RootLayout() {
     // Delay navigation to ensure layout is mounted
     const timer = setTimeout(() => {
       if (!currentUser) {
-        router.replace('/users/login');
+        router.replace('/auth/login');
       }
     }, 0);
     return () => clearTimeout(timer);
@@ -31,10 +31,8 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="admin" />
-        <Stack.Screen name="users" />
+        <Stack.Screen name="auth" />
         <Stack.Screen name="products" />
-        <Stack.Screen name="favorites" />
-        <Stack.Screen name="transactions" />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
       <StatusBar style="auto" />
