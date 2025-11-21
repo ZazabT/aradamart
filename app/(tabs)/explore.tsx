@@ -1,81 +1,36 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View, Text } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { ProductCard } from '@/components/product/ProductCard';
 import { NavBar } from '@/components/common/NavBar';
+import { useFavoritesStore } from '@/stores/favoritesStore';
 
-const WISHLIST_ITEMS = [
-  {
-    id: 1,
-    title: 'Essence Mascara Lash Princess',
-    description: 'Volumizing mascara',
-    price: 9.99,
-    discountPercentage: 10.48,
-    rating: 4.5,
-    stock: 50,
-    brand: 'Essence',
-    category: 'beauty',
-    thumbnail: 'https://cdn.dummyjson.com/product-images/1/thumbnail.webp',
-    images: ['https://cdn.dummyjson.com/product-images/1/1.webp'],
-  },
-  {
-    id: 2,
-    title: 'Red Lipstick',
-    description: 'Classic red lipstick',
-    price: 12.99,
-    discountPercentage: 5,
-    rating: 4.2,
-    stock: 30,
-    brand: 'Chic Cosmetics',
-    category: 'beauty',
-    thumbnail: 'https://cdn.dummyjson.com/product-images/2/thumbnail.webp',
-    images: ['https://cdn.dummyjson.com/product-images/2/1.webp'],
-  },
-  {
-    id: 3,
-    title: 'Red Nail Polish',
-    description: 'Long-lasting nail polish',
-    price: 8.99,
-    discountPercentage: 11,
-    rating: 4.3,
-    stock: 25,
-    brand: 'Nail Couture',
-    category: 'beauty',
-    thumbnail: 'https://cdn.dummyjson.com/product-images/3/thumbnail.webp',
-    images: ['https://cdn.dummyjson.com/product-images/3/1.webp'],
-  },
-  {
-    id: 4,
-    title: 'Foundation Makeup',
-    description: 'Full coverage foundation',
-    price: 15.99,
-    discountPercentage: 8,
-    rating: 4.6,
-    stock: 40,
-    brand: 'Beauty Pro',
-    category: 'beauty',
-    thumbnail: 'https://cdn.dummyjson.com/product-images/4/thumbnail.webp',
-    images: ['https://cdn.dummyjson.com/product-images/4/1.webp'],
-  },
-];
+export default function ExploreScreen() {
+  const { items: favoriteProducts } = useFavoritesStore();
 
-export default function WishlistScreen() {
   return (
     <ThemedView style={styles.container}>
       <NavBar />
       <ThemedView style={styles.header}>
-        <ThemedText style={styles.title}>My Wishlist</ThemedText>
-        <ThemedText style={styles.count}>{WISHLIST_ITEMS.length} items</ThemedText>
+        <ThemedText style={styles.title}>❤️ Explore Favorites</ThemedText>
+        <ThemedText style={styles.count}>{favoriteProducts.length} items saved</ThemedText>
       </ThemedView>
 
-      <FlatList
-        data={WISHLIST_ITEMS}
-        renderItem={({ item }) => <ProductCard product={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        contentContainerStyle={styles.listContent}
-      />
+      {favoriteProducts.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>No favorites yet</Text>
+          <Text style={styles.emptySubtext}>Add products to your favorites to see them here!</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={favoriteProducts}
+          renderItem={({ item }) => <ProductCard product={item} />}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          contentContainerStyle={styles.listContent}
+        />
+      )}
     </ThemedView>
   );
 }
@@ -104,5 +59,20 @@ const styles = StyleSheet.create({
   listContent: {
     paddingHorizontal: 8,
     paddingVertical: 12,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#999',
   },
 });

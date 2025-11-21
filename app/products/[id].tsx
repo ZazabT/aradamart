@@ -23,8 +23,14 @@ export default function ProductDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState('L');
   const [quantity, setQuantity] = useState(1);
-  const { favorites, toggleFavorite } = useFavoritesStore();
-  const isFavorite = favorites.includes(Number(id));
+  const { toggleFavorite, isFavorite: checkIsFavorite } = useFavoritesStore();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      setIsFavorite(checkIsFavorite(Number(id)));
+    }
+  }, [id, checkIsFavorite]);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -59,7 +65,8 @@ export default function ProductDetailScreen() {
 
   const handleToggleFavorite = () => {
     if (product) {
-      toggleFavorite(product.id);
+      toggleFavorite(product);
+      setIsFavorite(!isFavorite);
     }
   };
 
