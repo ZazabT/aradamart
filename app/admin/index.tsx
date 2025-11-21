@@ -2,7 +2,8 @@ import { useAuthStore } from '@/stores/authStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AdminActivityTab from './activity/tab';
 import AdminProductsTab from './products/tab';
 import AdminUsersTab from './users/tab';
@@ -14,7 +15,7 @@ export default function AdminScreen() {
 
   useEffect(() => {
     if (!currentUser || currentUser.role !== 'admin') {
-      router.replace('/users/login');
+      router.replace('/auth/login');
     }
   }, [currentUser, router]);
 
@@ -24,11 +25,11 @@ export default function AdminScreen() {
 
   const handleLogout = () => {
     logout();
-    router.replace('/users/login');
+    router.replace('/auth/login');
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView style={{ flex: 1 }} edges={['top']} className="flex-1 bg-white">
       {/* Header */}
       <View className="bg-white px-5 py-4 border-b border-gray-200">
         <View className="flex-row justify-between items-center">

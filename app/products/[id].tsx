@@ -7,14 +7,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    SafeAreaView,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProductDetailScreen() {
   const router = useRouter();
@@ -72,7 +72,7 @@ export default function ProductDetailScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 items-center justify-center bg-white">
+      <SafeAreaView  className="flex-1 items-center justify-center bg-white">
         <ActivityIndicator size="large" color="#ff6b35" />
       </SafeAreaView>
     );
@@ -95,7 +95,7 @@ export default function ProductDetailScreen() {
     : '0';
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView style={{ flex: 1 }} edges={['top']} className="flex-1 bg-white">
       {/* Header - Safe Area Compliant */}
       <View className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100">
         <TouchableOpacity

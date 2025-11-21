@@ -25,7 +25,12 @@ export function NavBar({ onMenuPress }: NavBarProps) {
   const handleLogout = () => {
     logout();
     setMenuOpen(false);
-    router.replace('/users/login');
+    router.replace('/auth/login');
+  };
+
+  const handleNavigation = (route: any) => {
+    setMenuOpen(false);
+    router.push(route);
   };
 
   return (
@@ -44,14 +49,14 @@ export function NavBar({ onMenuPress }: NavBarProps) {
         </Text>
 
         <View className="flex-row gap-3">
-          <TouchableOpacity className="p-2">
+          <TouchableOpacity onPress={() => handleNavigation('/(tabs)/explore')} className="p-2">
             <Ionicons
               name="notifications-outline"
               size={24}
               color={isDark ? '#fff' : '#000'}
             />
           </TouchableOpacity>
-          <TouchableOpacity className="p-2">
+          <TouchableOpacity onPress={() => handleNavigation('/(tabs)/explore')} className="p-2">
             <Ionicons
               name="bag-outline"
               size={24}
@@ -90,7 +95,7 @@ export function NavBar({ onMenuPress }: NavBarProps) {
               </View>
             )}
 
-            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
+            <TouchableOpacity onPress={() => handleNavigation('/(tabs)')} className="flex-row items-center gap-3 py-3 px-3 rounded-lg hover:bg-gray-100">
               <Ionicons
                 name="home-outline"
                 size={20}
@@ -101,7 +106,7 @@ export function NavBar({ onMenuPress }: NavBarProps) {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
+            <TouchableOpacity onPress={() => handleNavigation('/(tabs)/explore')} className="flex-row items-center gap-3 py-3 px-3 rounded-lg hover:bg-gray-100">
               <Ionicons
                 name="heart-outline"
                 size={20}
@@ -112,14 +117,14 @@ export function NavBar({ onMenuPress }: NavBarProps) {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row items-center gap-3 py-3 px-3 rounded-lg">
+            <TouchableOpacity onPress={() => handleNavigation('/admin')} className="flex-row items-center gap-3 py-3 px-3 rounded-lg hover:bg-gray-100">
               <Ionicons
                 name="settings-outline"
                 size={20}
                 color={isDark ? '#fff' : '#000'}
               />
               <Text className={`text-base font-medium ${isDark ? 'text-white' : 'text-black'}`}>
-                Settings
+                Admin
               </Text>
             </TouchableOpacity>
 
