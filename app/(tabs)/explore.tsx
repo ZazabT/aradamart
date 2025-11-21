@@ -1,9 +1,9 @@
-import { FlatList, StyleSheet, View, Text } from 'react-native';
+import { NavBar } from '@/components/common/NavBar';
+import { ProductCard } from '@/components/product/ProductCard';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { ProductCard } from '@/components/product/ProductCard';
-import { NavBar } from '@/components/common/NavBar';
 import { useFavoritesStore } from '@/stores/favoritesStore';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 export default function ExploreScreen() {
   const { items: favoriteProducts } = useFavoritesStore();
@@ -12,7 +12,7 @@ export default function ExploreScreen() {
     <ThemedView style={styles.container}>
       <NavBar />
       <ThemedView style={styles.header}>
-        <ThemedText style={styles.title}>❤️ Explore Favorites</ThemedText>
+        <ThemedText style={styles.title}>Explore Favorites</ThemedText>
         <ThemedText style={styles.count}>{favoriteProducts.length} items saved</ThemedText>
       </ThemedView>
 

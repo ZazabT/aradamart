@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import AdminActivityTab from './activity/tab';
 import AdminProductsTab from './products/tab';
 import AdminUsersTab from './users/tab';
-import AdminActivityTab from './activity/tab';
 
 export default function AdminScreen() {
   const router = useRouter();
@@ -59,9 +59,6 @@ export default function AdminScreen() {
             activeTab === 'products' ? 'bg-orange-50' : 'bg-white'
           }`}
         >
-          <Text className={`text-2xl mb-1 ${activeTab === 'products' ? 'opacity-100' : 'opacity-60'}`}>
-            📦
-          </Text>
           <Text className={`font-bold text-xs ${activeTab === 'products' ? 'text-orange-600' : 'text-gray-600'}`}>
             Products
           </Text>
@@ -73,9 +70,6 @@ export default function AdminScreen() {
             activeTab === 'users' ? 'bg-blue-50' : 'bg-white'
           }`}
         >
-          <Text className={`text-2xl mb-1 ${activeTab === 'users' ? 'opacity-100' : 'opacity-60'}`}>
-            👥
-          </Text>
           <Text className={`font-bold text-xs ${activeTab === 'users' ? 'text-blue-600' : 'text-gray-600'}`}>
             Users
           </Text>
@@ -87,9 +81,6 @@ export default function AdminScreen() {
             activeTab === 'activity' ? 'bg-purple-50' : 'bg-white'
           }`}
         >
-          <Text className={`text-2xl mb-1 ${activeTab === 'activity' ? 'opacity-100' : 'opacity-60'}`}>
-            📊
-          </Text>
           <Text className={`font-bold text-xs ${activeTab === 'activity' ? 'text-purple-600' : 'text-gray-600'}`}>
             Activity
           </Text>
