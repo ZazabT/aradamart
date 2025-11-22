@@ -9,15 +9,20 @@ import { Product, fetchProducts as fetchProductsAPI, fetchCategories as fetchCat
 interface ProductStore {
   products: Product[];
   filteredProducts: Product[];
+  displayedProducts: Product[];
   categories: string[];
   loading: boolean;
   error: string | null;
   searchQuery: string;
   selectedCategory: string | null;
+  currentPage: number;
+  itemsPerPage: number;
+  hasMore: boolean;
   fetchProducts: () => Promise<void>;
   fetchCategories: () => Promise<void>;
   setSearchQuery: (query: string) => void;
   setSelectedCategory: (category: string | null) => void;
+  loadMore: () => void;
   clearError: () => void;
 }
 
@@ -36,21 +41,37 @@ const filterProducts = (
   });
 };
 
+const getDisplayedProducts = (
+  filteredProducts: Product[],
+  currentPage: number,
+  itemsPerPage: number
+): Product[] => {
+  const startIndex = 0;
+  const endIndex = (currentPage + 1) * itemsPerPage;
+  return filteredProducts.slice(startIndex, endIndex);
+};
+
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
   filteredProducts: [],
+  displayedProducts: [],
   loading: false,
   error: null,
   searchQuery: '',
   selectedCategory: null,
   categories: [],
+  currentPage: 0,
+  itemsPerPage: 10,
+  hasMore: true,
 
   fetchProducts: async () => {
-    set({ loading: true, error: null });
+    set({ loading: true, error: null, currentPage: 0 });
     try {
       const products = await fetchProductsAPI();
       const filteredProducts = filterProducts(products, '', null);
-      set({ products, filteredProducts, loading: false });
+      const displayedProducts = getDisplayedProducts(filteredProducts, 0, 10);
+      const hasMore = filteredProducts.length > 10;
+      set({ products, filteredProducts, displayedProducts, hasMore, loading: false });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to fetch products';
       set({ error: errorMessage, loading: false });
@@ -67,15 +88,27 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   },
 
   setSearchQuery: (query: string) => {
-    const { products, selectedCategory } = get();
+    const { products, selectedCategory, itemsPerPage } = get();
     const filteredProducts = filterProducts(products, query, selectedCategory);
-    set({ searchQuery: query, filteredProducts });
+    const displayedProducts = getDisplayedProducts(filteredProducts, 0, itemsPerPage);
+    const hasMore = filteredProducts.length > itemsPerPage;
+    set({ searchQuery: query, filteredProducts, displayedProducts, currentPage: 0, hasMore });
   },
 
   setSelectedCategory: (category: string | null) => {
-    const { products, searchQuery } = get();
+    const { products, searchQuery, itemsPerPage } = get();
     const filteredProducts = filterProducts(products, searchQuery, category);
-    set({ selectedCategory: category, filteredProducts });
+    const displayedProducts = getDisplayedProducts(filteredProducts, 0, itemsPerPage);
+    const hasMore = filteredProducts.length > itemsPerPage;
+    set({ selectedCategory: category, filteredProducts, displayedProducts, currentPage: 0, hasMore });
+  },
+
+  loadMore: () => {
+    const { filteredProducts, currentPage, itemsPerPage } = get();
+    const nextPage = currentPage + 1;
+    const displayedProducts = getDisplayedProducts(filteredProducts, nextPage, itemsPerPage);
+    const hasMore = displayedProducts.length < filteredProducts.length;
+    set({ currentPage: nextPage, displayedProducts, hasMore });
   },
 
   clearError: () => set({ error: null }),

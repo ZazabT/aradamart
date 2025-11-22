@@ -10,7 +10,7 @@ import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
 
 export default function HomeScreen() {
   const { 
-    filteredProducts, 
+    displayedProducts, 
     loading, 
     error, 
     fetchProducts,
@@ -20,6 +20,8 @@ export default function HomeScreen() {
     selectedCategory,
     setSelectedCategory,
     categories,
+    hasMore,
+    loadMore,
   } = useProductStore();
 
   useEffect(() => {
@@ -58,13 +60,25 @@ export default function HomeScreen() {
         onSelectCategory={setSelectedCategory}
       />
       <FlatList
-        data={filteredProducts}
+        data={displayedProducts}
         renderItem={({ item }) => <ProductCard product={item} />}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
         contentContainerStyle={styles.listContent}
+        onEndReached={() => hasMore && loadMore()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={hasMore ? <LoadingFooter /> : null}
       />
+    </ThemedView>
+  );
+}
+
+function LoadingFooter() {
+  return (
+    <ThemedView style={styles.loadingFooter}>
+      <ActivityIndicator size="small" color="#ff6b35" />
+      <ThemedText style={styles.loadingFooterText}>Loading more...</ThemedText>
     </ThemedView>
   );
 }
@@ -102,5 +116,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     borderRadius: 8,
     fontWeight: '600',
+  },
+  loadingFooter: {
+    paddingVertical: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+  },
+  loadingFooterText: {
+    fontSize: 14,
+    marginTop: 8,
   },
 });
