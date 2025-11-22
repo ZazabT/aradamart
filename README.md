@@ -314,13 +314,6 @@ Admin Dashboard (/admin)
 
 ---
 
-## 🔧 Configuration
-
-### Environment Variables
-Create `.env.local` if needed for API endpoints:
-```
-EXPO_PUBLIC_API_URL=https://dummyjson.com
-```
 
 ### Tailwind CSS
 Configured in `tailwind.config.js` with custom colors and utilities.
