@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { View, ActivityIndicator } from 'react-native';
+import { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
 export default function RootRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/users/login');
+    router.replace('/auth/login');
   }, [router]);
 
   return (
